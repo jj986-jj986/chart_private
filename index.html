@@ -144,10 +144,11 @@
         dashboard.bind(categoryFilter_1, lineGraph);
 
         // Таймлайн для выбора года
-        document.getElementById('yearSlider').addEventListener('click', function() {
+        document.getElementById('yearSlider').addEventListener('input', function() {
           var year = this.value;
           // Обновляем фильтр Google Charts с выбранным годом
           categoryFilter.setState({ 'selectedValues': [year] });
+          document.getElementById('yearValue').textContent = year;  // Отображаем текущее значение года
           dashboard.draw(data); 
         });
 
@@ -157,7 +158,25 @@
           if (selectedItem) {
             var selectedUF = data.getValue(selectedItem.row, 1);
             categoryFilter_1.setState({'selectedValues': [selectedUF]});
-            dashboard.draw(data);
+            var cur_year = categoryFilter.getState().selectedValues[0];
+            var filtered = data.getFilteredRows([
+              {column: 0, value: cur_year},
+              {column: 1, value: selectedUF}
+            ]);
+            var upd_data = new google.visualization.DataTable();
+            upd_data.addColumn('string', 'Sector');
+            upd_data.addColumn('number', 'Value');
+            if (filtered.length > 0) {
+              upd_data.addRows([
+                ['Agriculture', data.getValue(filtered[0], 3)],
+                ['Industry', data.getValue(filtered[0], 4)],
+                ['Services', data.getValue(filtered[0], 5)],
+                ['Public Sector', data.getValue(filtered[0], 6)],
+                ['Others', data.getValue(filtered[0], 7)]
+              ])}
+            structurePie.setDataTable(upd_data);          
+            structurePie.draw();
+            dashboard.draw(data)
           }
         });
         categoryFilter.setState({ 'selectedValues': ['2010'] });
@@ -169,9 +188,6 @@
           'options': {
             title: "Real GDP Structure", 
           }});
-        structurePie.setDataTable(data);
-        dashboard.bind([categoryFilter, categoryFilter_1], structurePie);
-
         dashboard.draw(data);
       }
     </script>
@@ -188,8 +204,8 @@
         <div id="chart_div_2" style="width: 600px; height: 200px;"></div>
       </div>
     </div>
-    <label for="yearSlider">Year: 2010 </label>
+    <label for="yearSlider">Year: </label>
     <input type="range" id="yearSlider" min="2010" max="2021" value="2010">
-    <span id="yearValue">2021</span>
+    <span id="yearValue">2010</span>
   </body>
 </html>
