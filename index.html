@@ -143,16 +143,15 @@
         lineGraph.setDataTable(data);
         dashboard.bind(categoryFilter_1, lineGraph);
 
-        // Таймлайн для выбора года
         document.getElementById('yearSlider').addEventListener('input', function() {
           var year = this.value;
           categoryFilter.setState({ 'selectedValues': [year] });
           document.getElementById('yearValue').textContent = year;
-          
+          dashboard.draw(data)
           var cur_UF = categoryFilter_1.getState().selectedValues[0];
           var filtered = data.getFilteredRows([
-              {column: 1, value: year},
-              {column: 0, value: cur_UF}
+              {column: 0, value: year},
+              {column: 1, value: cur_UF}
             ]);
           var upd_data = new google.visualization.DataTable();
           upd_data.addColumn('string', 'Sector');
@@ -218,8 +217,8 @@
       </div>
       <div>
         <div id="filter_div_1" style="width: 600px; height: 100px;"></div>
-        <div id="chart_div_1" style="width: 600px; height: 400px;"></div>
-        <div id="chart_div_2" style="width: 600px; height: 400px;"></div>
+        <div id="chart_div_1" style="width: 600px; height: 300px;"></div>
+        <div id="chart_div_2" style="width: 600px; height: 300px;"></div>
       </div>
     </div>
     <label for="yearSlider">Year: </label>
