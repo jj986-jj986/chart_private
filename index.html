@@ -149,10 +149,10 @@
           'options': {
             title: "Real GDP Structure", 
           },
-          'view': {'columns': [3,4,5,6,7]}
+          'view': {'columns': [3,4]}  // Выбираем только два столбца для круговой диаграммы
         });
         structurePie.setDataTable(data);
-        dashboard.bind(categoryFilter, categoryFilter_1, structurePie);
+        dashboard.bind([categoryFilter, categoryFilter_1], structurePie);  // Привязываем круговую диаграмму к фильтрам
 
         // Таймлайн для выбора года
         document.getElementById('yearSlider').addEventListener('click', function() {
