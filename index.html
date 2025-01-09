@@ -67,7 +67,7 @@
       google.charts.setOnLoadCallback(drawSheetName);
 
       function drawSheetName() {
-        var queryString = encodeURIComponent('SELECT A,B,C');
+        var queryString = encodeURIComponent('SELECT A,B,C,D,E,F,G,I');
 
         var query = new google.visualization.Query(
           'https://docs.google.com/spreadsheets/d/1RORwncs0WaVaq2YecdBS0bZ09ouILOTzTt-DmYtdPFw/gviz/tq?sheet=' + 
@@ -142,6 +142,17 @@
         });
         lineGraph.setDataTable(data);
         dashboard.bind(categoryFilter_1, lineGraph);
+        
+        var structurePie = new google.visualization.ChartWrapper({
+          'chartType': 'PieChart',
+          'containerId': 'chart_div_2',
+          'options': {
+            title: "Real GDP Structure", 
+          },
+          'view': {'columns': [3,4,5,6,7]}
+        });
+        structurePie.setDataTable(data);
+        dashboard.bind(categoryFilter, categoryFilter_1, structurePie);
 
         // Таймлайн для выбора года
         document.getElementById('yearSlider').addEventListener('click', function() {
@@ -175,7 +186,8 @@
       </div>
       <div>
         <div id="filter_div_1" style="width: 600px; height: 100px;"></div>
-        <div id="chart_div_1" style="width: 600px; height: 400px;"></div>
+        <div id="chart_div_1" style="width: 600px; height: 200px;"></div>
+        <div id="chart_div_1" style="width: 600px; height: 200px;"></div>
       </div>
     </div>
     <label for="yearSlider">Year: 2010 </label>
