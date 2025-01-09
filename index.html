@@ -146,9 +146,27 @@
         // Таймлайн для выбора года
         document.getElementById('yearSlider').addEventListener('input', function() {
           var year = this.value;
-          // Обновляем фильтр Google Charts с выбранным годом
           categoryFilter.setState({ 'selectedValues': [year] });
-          document.getElementById('yearValue').textContent = year;  // Отображаем текущее значение года
+          document.getElementById('yearValue').textContent = year;
+          
+          var cur_UF = categoryFilter_1.getState().selectedValues[0];
+          var filtered = data.getFilteredRows([
+              {column: 1, value: year},
+              {column: 0, value: cur_UF}
+            ]);
+          var upd_data = new google.visualization.DataTable();
+          upd_data.addColumn('string', 'Sector');
+          upd_data.addColumn('number', 'Value');
+          if (filtered.length > 0) {
+              upd_data.addRows([
+                ['Agriculture', data.getValue(filtered[0], 3)],
+                ['Industry', data.getValue(filtered[0], 4)],
+                ['Services', data.getValue(filtered[0], 5)],
+                ['Public Sector', data.getValue(filtered[0], 6)],
+                ['Others', data.getValue(filtered[0], 7)]
+              ])}
+            structurePie.setDataTable(upd_data);          
+            structurePie.draw();        
           dashboard.draw(data); 
         });
 
@@ -200,8 +218,8 @@
       </div>
       <div>
         <div id="filter_div_1" style="width: 600px; height: 100px;"></div>
-        <div id="chart_div_1" style="width: 600px; height: 200px;"></div>
-        <div id="chart_div_2" style="width: 600px; height: 200px;"></div>
+        <div id="chart_div_1" style="width: 600px; height: 400px;"></div>
+        <div id="chart_div_2" style="width: 600px; height: 400px;"></div>
       </div>
     </div>
     <label for="yearSlider">Year: </label>
