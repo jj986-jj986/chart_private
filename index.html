@@ -147,26 +147,26 @@
           var year = this.value;
           categoryFilter.setState({ 'selectedValues': [year] });
           document.getElementById('yearValue').textContent = year;
-          dashboard.draw(data);
-          var cur_UF = categoryFilter_1.getState().selectedValues[0];
-          var filtered = data.getFilteredRows([
-            {column: 0, value: year},
-            {column: 1, value: cur_UF}
-          ]);
-          var upd_data = new google.visualization.DataTable();
-          upd_data.addColumn('string', 'Sector');
-          upd_data.addColumn('number', 'Value');
-          if (filtered.length > 0) {
-            upd_data.addRows([
-              ['Agriculture', data.getValue(filtered[0], 3)],
-              ['Industry', data.getValue(filtered[0], 4)],
-              ['Services', data.getValue(filtered[0], 5)],
-              ['Public Sector', data.getValue(filtered[0], 6)],
-              ['Others', data.getValue(filtered[0], 7)]
+          dashboard.draw(data)
+          if (year) {
+            var cur_UF = categoryFilter_1.getState().selectedValues[0];
+            var filtered = data.getFilteredRows([
+              {column: 0, value: year},
+              {column: 1, value: cur_UF}
             ]);
-          }
-          structurePie.setDataTable(upd_data);          
-          structurePie.draw();
+            var upd_data = new google.visualization.DataTable();
+            upd_data.addColumn('string', 'Sector');
+            upd_data.addColumn('number', 'Value');
+            if (filtered.length > 0) {
+              upd_data.addRows([
+                ['Agriculture', data.getValue(filtered[0], 3)],
+                ['Industry', data.getValue(filtered[0], 4)],
+                ['Services', data.getValue(filtered[0], 5)],
+                ['Public Sector', data.getValue(filtered[0], 6)],
+                ['Others', data.getValue(filtered[0], 7)]
+              ])}
+            structurePie.setDataTable(upd_data);          
+            structurePie.draw();
         });
 
         google.visualization.events.addListener(geochart, 'select', function() {
@@ -189,22 +189,22 @@
                 ['Services', data.getValue(filtered[0], 5)],
                 ['Public Sector', data.getValue(filtered[0], 6)],
                 ['Others', data.getValue(filtered[0], 7)]
-              ]);
-            }
+              ])}
             structurePie.setDataTable(upd_data);          
             structurePie.draw();
+            dashboard.draw(data)
           }
         });
+        categoryFilter_1.setState({ 'selectedValues': ['Acre'] });
+        categoryFilter.setState({ 'selectedValues': ['2010'] });
+         
         
         var structurePie = new google.visualization.ChartWrapper({
           'chartType': 'PieChart',
           'containerId': 'chart_div_2',
           'options': {
             title: "Real GDP Structure", 
-          }
-        });
-
-        dashboard.bind([categoryFilter, categoryFilter_1], structurePie);
+          }});
         dashboard.draw(data);
       }
     </script>
@@ -221,8 +221,8 @@
         <div id="chart_div_2" style="width: 600px; height: 300px;"></div>
       </div>
     </div>
-    <label for="yearSlider">Year: 2010 </label>
+    <label for="yearSlider">Year: </label>
     <input type="range" id="yearSlider" min="2010" max="2021" value="2010">
-    <span id="yearValue"> 2021</span>
+    <span id="yearValue">2010</span>
   </body>
 </html>
