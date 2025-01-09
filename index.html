@@ -142,17 +142,6 @@
         });
         lineGraph.setDataTable(data);
         dashboard.bind(categoryFilter_1, lineGraph);
-        
-        var structurePie = new google.visualization.ChartWrapper({
-          'chartType': 'PieChart',
-          'containerId': 'chart_div_2',
-          'options': {
-            title: "Real GDP Structure", 
-          },
-          'view': {'columns': [3,4]}  // Выбираем только два столбца для круговой диаграммы
-        });
-        structurePie.setDataTable(data);
-        dashboard.bind([categoryFilter, categoryFilter_1], structurePie);  // Привязываем круговую диаграмму к фильтрам
 
         // Таймлайн для выбора года
         document.getElementById('yearSlider').addEventListener('click', function() {
@@ -173,6 +162,15 @@
         });
         categoryFilter.setState({ 'selectedValues': ['2010'] });
         categoryFilter_1.setState({ 'selectedValues': ['Acre'] }); 
+        
+        var structurePie = new google.visualization.ChartWrapper({
+          'chartType': 'PieChart',
+          'containerId': 'chart_div_2',
+          'options': {
+            title: "Real GDP Structure", 
+          }});
+        structurePie.setDataTable(data);
+        dashboard.bind([categoryFilter, categoryFilter_1], structurePie);
 
         dashboard.draw(data);
       }
