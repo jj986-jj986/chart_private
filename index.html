@@ -1,7 +1,9 @@
 <html>
   <head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+  <head>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <style>
+    <style>   
       :root {
   --primary-color: #2f3f4f;
   --secondary-color: #acb2b9;
@@ -12,7 +14,7 @@
 body {
   background-color: var(--background-color);
   color: var(--font-color);
-font-family: Georgia, serif;
+font-family: Roboto, sans-serif;
       }
       label[for="chart_div"] {
       left: 25%;
@@ -30,8 +32,9 @@ font-family: Georgia, serif;
       }
 
       #yearSlider:hover {
-        background-color: #bbb;
-      }
+  transform: scale(1.05);
+  background-color: var(--secondary-color);
+}
 
       #yearSlider::-webkit-slider-thumb {
         width: 20px;
