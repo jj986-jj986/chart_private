@@ -1,28 +1,27 @@
 <html>
   <head>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
-  <head>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <style>   
+    <style>
       :root {
-  --primary-color: #2f3f4f;
-  --secondary-color: #acb2b9;
-  --accent-color: #8a3034;
-  --background-color: #f5f5f5;
-  --font-color: #333;
-}
-body {
-  background-color: var(--background-color);
-  color: var(--font-color);
-font-family: Roboto, sans-serif;
+        --primary-color: #2f3f4f;
+        --secondary-color: #acb2b9;
+        --accent-color: #8a3034;
+        --background-color: #f5f5f5;
+        --font-color: #333;
       }
-      label[for="chart_div"] {
-      left: 25%;
-      transform: translateX(-50%);
-      justify-self: center;
-    }
+      body {
+        background-color: var(--background-color);
+        color: var(--font-color);
+        font-family: Roboto, sans-serif;
+      }
 
-      /* Настройка слайдера для выбора года */
+      label[for="chart_div"] {
+        left: 25%;
+        transform: translateX(-50%);
+        justify-self: center;
+      }
+
       #yearSlider {
         width: 300px;
         height: 10px;
@@ -35,8 +34,7 @@ font-family: Roboto, sans-serif;
 
       #yearSlider:hover {
         background-color: var(--secondary-color);
-        primary-color: var(--primary-color);
-}
+      }
 
       #yearSlider::-webkit-slider-thumb {
         width: 20px;
@@ -54,7 +52,6 @@ font-family: Roboto, sans-serif;
         cursor: pointer;
       }
 
-     /* Стили для отображения года */
       #yearValue {
         font-size: 16px;
         font-weight: bold;
@@ -62,32 +59,30 @@ font-family: Roboto, sans-serif;
         margin-left: 10px;
       }
 
-        #container {
-  width: calc(100vw - 10px); /* 100% ширины окна браузера минус отступы */
-  height: calc(100vh - 10px); /* 100% высоты окна браузера минус отступы */
-  padding: 5px; /* Отступы по 5 пикселей */
-  box-sizing: border-box; /* Включение padding в общие размеры */
-}
+      #container {
+        width: calc(100vw - 10px);
+        height: calc(100vh - 10px);
+        padding: 5px;
+        box-sizing: border-box;
+      }
 
-  #chart_div {
-  grid-column: 1 / 3;
-  grid-row: 1 / 3;
-  justify-self: center;
-}
+      #chart_div {
+        grid-column: 1 / 3;
+        grid-row: 1 / 3;
+        justify-self: center;
+      }
 
+      #chart_div_1 {
+        grid-column: 2 / 3;
+        grid-row: 1 / 2;
+        height: 100%;
+      }
 
-  #chart_div_1 {
-    grid-column: 2 / 3; /* Right column */
-    grid-row: 1 / 2; /* Top third of right column */
-    height: 100%;
-  }
-
-  #chart_div_2 {
-    grid-column: 2 / 3; /* Right column */
-    grid-row: 2 / 3; /* Bottom two-thirds of right column */
-    height: 100%;
-  }
-
+      #chart_div_2 {
+        grid-column: 2 / 3;
+        grid-row: 2 / 3;
+        height: 100%;
+      }
     </style>
     <script type="text/javascript">
       google.charts.load('current', {
@@ -97,9 +92,8 @@ font-family: Roboto, sans-serif;
 
       function drawSheetName() {
         var queryString = encodeURIComponent('SELECT A,B,C,D,E,F,G,I');
-
         var query = new google.visualization.Query(
-          'https://docs.google.com/spreadsheets/d/1RORwncs0WaVaq2YecdBS0bZ09ouILOTzTt-DmYtdPFw/gviz/tq?sheet=' + 
+          'https://docs.google.com/spreadsheets/d/1RORwncs0WaVaq2YecdBS0bZ09ouILOTzTt-DmYtdPFw/gviz/tq?sheet=' +
           encodeURIComponent('Sheet2') + '&headers=1&tq=' + queryString
         );
         query.send(handleSampleDataQueryResponse);
@@ -128,12 +122,12 @@ font-family: Roboto, sans-serif;
             }
           }
         });
-        
+
         var categoryFilter_1 = new google.visualization.ControlWrapper({
           'controlType': 'CategoryFilter',
           'containerId': 'filter_div_1',
           'options': {
-            'filterColumnIndex': 1,  
+            'filterColumnIndex': 1,
             'ui': {
               'label': 'Selected UF',
               'allowTyping': false,
@@ -147,18 +141,13 @@ font-family: Roboto, sans-serif;
           'containerId': 'chart_div',
           'options': {
             title: "Gini Index by State",
-            backgroundColor: {
-              fill:'#eeeeee',
-            strokeWidth: 3},
+            backgroundColor: { fill:'#eeeeee', strokeWidth: 3 },
             'region': 'BR',
             'displayMode': 'regions',
             'resolution': 'provinces',
-            'colorAxis': {
-              'colors': ['#d6bbbb', '#b55b5b']
-            }
+            'colorAxis': { 'colors': ['#d6bbbb', '#b55b5b'] }
           },
-          'view': {'columns': [1,2]},
-          
+          'view': { 'columns': [1,2] },
         });
 
         geochart.setDataTable(data);
@@ -174,73 +163,34 @@ font-family: Roboto, sans-serif;
             vAxis: { title: "Gini Index" },
             colors: ['#a91919']
           },
-          'view': {'columns': [0,2]}
+          'view': { 'columns': [0,2] }
         });
         lineGraph.setDataTable(data);
         dashboard.bind(categoryFilter_1, lineGraph);
 
         // Таймлайн для выбора года
-        document.getElementById('yearSlider').addEventListener('input', function() {
-          var year = this.value;
-          categoryFilter.setState({ 'selectedValues': [year] });
-          document.getElementById('yearValue').textContent = year; 
-          
-          if (year) {
-            var cur_UF = categoryFilter_1.getState().selectedValues[0];
-            console.log(year, cur_UF)
-            var filtered = data.getFilteredRows([
-              {column: 0, value: Number(year)},
-              {column: 1, value: cur_UF}
-            ]);
-            var upd_data = new google.visualization.DataTable();
-            upd_data.addColumn('string', 'Sector');
-            upd_data.addColumn('number', 'Value');
-            if (filtered.length > 0) {
-              upd_data.addRows([
-                ['Agriculture', data.getValue(filtered[0], 3)],
-                ['Industry', data.getValue(filtered[0], 4)],
-                ['Services', data.getValue(filtered[0], 5)],
-                ['Public Sector', data.getValue(filtered[0], 6)],
-                ['Others', data.getValue(filtered[0], 7)]
-              ])}
-            console.log(upd_data)
-            structurePie.setDataTable(upd_data);          
-            structurePie.draw()
-          }
-          dashboard.draw(data); 
-        });
+        var yearSlider = document.getElementById('yearSlider');
+        if (yearSlider) {
+          yearSlider.addEventListener('input', function() {
+            var year = this.value;
+            categoryFilter.setState({ 'selectedValues': [year] });
+            document.getElementById('yearValue').textContent = year;
+            dashboard.draw(data);
+          });
+        }
 
-        // Добавляем обработчик события для кросс-фильтрации по UF
         google.visualization.events.addListener(geochart, 'select', function() {
           var selectedItem = geochart.getChart().getSelection()[0];
           if (selectedItem) {
             var selectedUF = data.getValue(selectedItem.row, 1);
             categoryFilter_1.setState({'selectedValues': [selectedUF]});
-            dashboard.draw(data)
-            var cur_year = categoryFilter.getState().selectedValues[0];
-            var filtered = data.getFilteredRows([
-              {column: 0, value: cur_year},
-              {column: 1, value: selectedUF}
-            ]);
-            var upd_data = new google.visualization.DataTable();
-            upd_data.addColumn('string', 'Sector');
-            upd_data.addColumn('number', 'Value');
-            if (filtered.length > 0) {
-              upd_data.addRows([
-                ['Agriculture', data.getValue(filtered[0], 3)],
-                ['Industry', data.getValue(filtered[0], 4)],
-                ['Services', data.getValue(filtered[0], 5)],
-                ['Public Sector', data.getValue(filtered[0], 6)],
-                ['Others', data.getValue(filtered[0], 7)]
-              ])}
-            structurePie.setDataTable(upd_data);          
-            structurePie.draw()
-            dashboard.draw();
+            dashboard.draw(data);
           }
         });
+
         categoryFilter.setState({ 'selectedValues': ['2010'] });
-        categoryFilter_1.setState({ 'selectedValues': ['Acre'] }); 
-        
+        categoryFilter_1.setState({ 'selectedValues': ['Acre'] });
+
         var structurePie = new google.visualization.ChartWrapper({
           'chartType': 'PieChart',
           'containerId': 'chart_div_2',
@@ -248,24 +198,28 @@ font-family: Roboto, sans-serif;
             backgroundColor: '#f5f5f5',
             title: "Real GDP Structure",
             colors: ['#66a26d', '#b55b5b', '#eed67d', '#4682b4', '#a9a9a9']
-          }});
+          }
+        });
 
         dashboard.draw(data);
       }
     </script>
   </head>
-    <body>
-  <div id="container">
-    <div id="dashboard_div">
-      <div id="filter_div" style="visibility: hidden"></div>
-      <label for="chart_div">Gini Index by State</label>
-      <div id="chart_div" style="width: calc(100% - 10px); height: 50vh;"></div>
+  <body>
+    <div id="container">
+      <div id="dashboard_div">
+        <div id="filter_div" style="visibility: hidden"></div>
+        <label for="chart_div">Gini Index by State</label>
+        <div id="chart_div" style="width: 100%; height: 50vh;"></div>
+      </div>
+      <div>
+        <div id="filter_div_1" style="visibility: hidden"></div>
+        <div id="chart_div_1" style="width: 100%; height: 25vh;"></div>
+        <div id="chart_div_2" style="width: 100%; height: 35vh;"></div>
+      </div>
     </div>
-    <div>
-      <div id="filter_div_1" style="visibility: hidden"></div>
-      <div id="chart_div_1" style="width: calc(100% - 10px); height: 25vh;"></div>
-      <div id="chart_div_2" style="width: calc(100% - 10px); height: 35vh;"></div>
-    </div>
-  </div>
-    </body>
+    <label for="yearSlider">Year: </label>
+    <span id="yearValue">2010</span>
+    <input type="range" id="yearSlider" min="2010" max="2021" value="2010">
+  </body>
 </html>
