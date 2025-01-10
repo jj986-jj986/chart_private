@@ -142,21 +142,20 @@ font-family: Georgia, serif;
         });
 
         var geochart = new google.visualization.ChartWrapper({
-  'chartType': 'GeoChart',
-  'containerId': 'chart_div',
-  'options': {
-    'region': 'BR',
-    'displayMode': 'regions',
-    'resolution': 'provinces',
-    'colorAxis': {
-      'colors': ['#acb2b9', '#2f3f4f']
-    },
-    'backgroundColor': '#f5f5f5',
-    'keepAspectRatio': false
-  },
-  'view': {'columns': [1, 2]}
-});
-
+          'chartType': 'GeoChart',
+          'containerId': 'chart_div',
+          'options': {
+            
+            'region': 'BR',
+            'displayMode': 'regions',
+            'resolution': 'provinces',
+            'colorAxis': {
+              'colors': ['#acb2b9', '#2f3f4f']
+            }
+          },
+          'view': {'columns': [1,2]},
+          backgroundColor: '#f5f5f5'
+        });
 
         geochart.setDataTable(data);
         dashboard.bind(categoryFilter, geochart);
@@ -252,13 +251,13 @@ font-family: Georgia, serif;
   <body>
     <div id="container">
       <div id="dashboard_div">
-        <div id="filter_div"></div>
-        <div id="chart_div"></div>
+        <div id="filter_div" style="width: 600px; height: 100px;"></div>
+        <div id="chart_div" style="width: 600px; height: 400px;"></div>
       </div>
       <div>
-        <div id="filter_div_1"></div>
-        <div id="chart_div_1"></div>
-        <div id="chart_div_2"></div>
+        <div id="filter_div_1" style="width: 600px; height: 100px;"></div>
+        <div id="chart_div_1" style="width: 600px; height: 200px;"></div>
+        <div id="chart_div_2" style="width: 600px; height: 400px;"></div>
       </div>
     </div>
     <label for="yearSlider">Year: </label>
