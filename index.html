@@ -170,17 +170,64 @@
         lineGraph.setDataTable(data);
         dashboard.bind(categoryFilter_1, lineGraph);
 
-        // Таймлайн для выбора года
-        var yearSlider = document.getElementById('yearSlider');
-        if (yearSlider) {
-          yearSlider.addEventListener('input', function() {
-            var year = this.value;
-            categoryFilter.setState({ 'selectedValues': [year] });
-            document.getElementById('yearValue').textContent = year;
-            dashboard.draw(data);
-          });
-        }
+         document.getElementById('yearSlider').addEventListener('input', function() {
+          var year = this.value;
+          categoryFilter.setState({ 'selectedValues': [year] });
+          document.getElementById('yearValue').textContent = year; 
+          
+          if (year) {
+            var cur_UF = categoryFilter_1.getState().selectedValues[0];
+            console.log(year, cur_UF)
+            var filtered = data.getFilteredRows([
+              {column: 0, value: Number(year)},
+              {column: 1, value: cur_UF}
+            ]);
+            var upd_data = new google.visualization.DataTable();
+            upd_data.addColumn('string', 'Sector');
+            upd_data.addColumn('number', 'Value');
+            if (filtered.length > 0) {
+              upd_data.addRows([
+                ['Agriculture', data.getValue(filtered[0], 3)],
+                ['Industry', data.getValue(filtered[0], 4)],
+                ['Services', data.getValue(filtered[0], 5)],
+                ['Public Sector', data.getValue(filtered[0], 6)],
+                ['Others', data.getValue(filtered[0], 7)]
+              ])}
+            console.log(upd_data)
+            structurePie.setDataTable(upd_data);          
+            structurePie.draw()
+          }
+          dashboard.draw(data); 
+        });
 
+        // Добавляем обработчик события для кросс-фильтрации по UF
+        google.visualization.events.addListener(geochart, 'select', function() {
+          var selectedItem = geochart.getChart().getSelection()[0];
+          if (selectedItem) {
+            var selectedUF = data.getValue(selectedItem.row, 1);
+            categoryFilter_1.setState({'selectedValues': [selectedUF]});
+            dashboard.draw(data)
+            var cur_year = categoryFilter.getState().selectedValues[0];
+            var filtered = data.getFilteredRows([
+              {column: 0, value: cur_year},
+              {column: 1, value: selectedUF}
+            ]);
+            var upd_data = new google.visualization.DataTable();
+            upd_data.addColumn('string', 'Sector');
+            upd_data.addColumn('number', 'Value');
+            if (filtered.length > 0) {
+              upd_data.addRows([
+                ['Agriculture', data.getValue(filtered[0], 3)],
+                ['Industry', data.getValue(filtered[0], 4)],
+                ['Services', data.getValue(filtered[0], 5)],
+                ['Public Sector', data.getValue(filtered[0], 6)],
+                ['Others', data.getValue(filtered[0], 7)]
+              ])}
+            structurePie.setDataTable(upd_data);          
+            structurePie.draw()
+            dashboard.draw();
+          }});
+        
         google.visualization.events.addListener(geochart, 'select', function() {
           var selectedItem = geochart.getChart().getSelection()[0];
           if (selectedItem) {
