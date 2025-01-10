@@ -128,7 +128,7 @@ font-family: Roboto, sans-serif;
           'controlType': 'CategoryFilter',
           'containerId': 'filter_div',
           'options': {
-            'filterColumnIndex': 0,  // Индекс столбца для фильтрации по году
+            'filterColumnIndex': 0,
             'ui': {
               'label': 'Selected Year',
               'allowTyping': false,
@@ -265,12 +265,12 @@ font-family: Roboto, sans-serif;
   <body>
     <div id="container">
       <div id="dashboard_div">
-        <div id="filter_div" style="width: 600px; height: 100px;"></div>
+        <div id="filter_div" style="visibility: hidden"></div>
         <label for="chart_div"> Gini Index by State </label>
         <div id="chart_div" style="width: 600px; height: 600px;"></div>
       </div>
       <div>
-        <div id="filter_div_1" style="width: 600px; height: 100px;"></div>
+        <div id="filter_div_1" style="visibility: hidden">></div>
         <div id="chart_div_1" style="width: 600px; height: 200px;"></div>
         <div id="chart_div_2" style="width: 600px; height: 400px;"></div>
       </div>
