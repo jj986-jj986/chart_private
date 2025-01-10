@@ -146,7 +146,6 @@
         // Таймлайн для выбора года
         document.getElementById('yearSlider').addEventListener('input', function() {
           var year = this.value;
-          // Обновляем фильтр Google Charts с выбранным годом
           categoryFilter.setState({ 'selectedValues': [year] });
           document.getElementById('yearValue').textContent = year;  // Отображаем текущее значение года
           dashboard.draw(data); 
@@ -175,7 +174,8 @@
                 ['Others', data.getValue(filtered[0], 7)]
               ])}
             structurePie.setDataTable(upd_data);          
-            structurePie.draw();
+            structurePie.draw()
+            dashboard.draw();
           }
         });
         categoryFilter.setState({ 'selectedValues': ['2010'] });
