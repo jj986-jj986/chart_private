@@ -148,7 +148,7 @@
           var year = this.value;
           categoryFilter.setState({ 'selectedValues': [year] });
           document.getElementById('yearValue').textContent = year; 
-          
+          console.log(year)
           if (year) {
             var cur_UF = categoryFilter_1.getState().selectedValues[0];
             var filtered = data.getFilteredRows([
