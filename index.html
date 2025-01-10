@@ -165,8 +165,7 @@ font-family: Roboto, sans-serif;
         });
 
         geochart.setDataTable(data);
-        dashboard.bind(categoryFilter, geochart);
-
+        
         var lineGraph = new google.visualization.ChartWrapper({
           'chartType': 'LineChart',
           'containerId': 'chart_div_1',
@@ -180,7 +179,7 @@ font-family: Roboto, sans-serif;
           'view': {'columns': [0,2]}
         });
         lineGraph.setDataTable(data);
-        dashboard.bind(categoryFilter_1, lineGraph);
+        
 
         // Таймлайн для выбора года
         document.getElementById('yearSlider').addEventListener('input', function() {
@@ -210,6 +209,7 @@ font-family: Roboto, sans-serif;
             structurePie.setDataTable(upd_data);          
             structurePie.draw()
           }
+          dashboard.bind(categoryFilter, [geochart, lineGraph, structurePie]);
           dashboard.draw(data); 
         });
 
