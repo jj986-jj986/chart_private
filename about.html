@@ -1,1 +1,43 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {
+        'packages': ['geochart', 'controls']
+      });
+      google.charts.setOnLoadCallback(drawSheetName);
+    function drawSheetName() {
+        var queryString = encodeURIComponent('SELECT A,B,C');
 
+        var query = new google.visualization.Query(
+          'https://docs.google.com/spreadsheets/d/18G-ZjrRgITzJ2X1f8QIMTI0MlaWIPC0eGSssCsnhoHk/gviz/tq?sheet=' + 
+          encodeURIComponent('Sheet1') + '&headers=1&tq=' + queryString
+        );
+        query.send(handleSampleDataQueryResponse);
+      }
+
+      function handleSampleDataQueryResponse(response) {
+        if (response.isError()) {
+          alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+          return;
+        }
+        var data = response.getDataTable();
+
+        var options = {
+          width: 600,
+        };
+
+        // Instantiates and draws our chart, passing in some options.
+        var chart = new google.visualization.Sankey(document.getElementById('sankey_basic'));
+        chart.draw(data, options);
+      }
+        </script>
+  </head>
+  <body>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+    </nav>
+    <div id="sankey_basic">
+  </body>
+  </html>
