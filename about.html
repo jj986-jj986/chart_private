@@ -23,9 +23,21 @@
         }
         var data = response.getDataTable();
         console.log(data)
+        
+        var colors = ['#a6cee3', '#b2df8a', '#fb9a99', '#fdbf6f',
+                  '#cab2d6', '#ffff99', '#1f78b4', '#33a02c']
 
         var options = {
-          width: 600,
+          width: 1000,
+          sankey: {
+        node: {
+          colors: colors
+        },
+        link: {
+          colorMode: 'gradient',
+          colors: colors
+        }
+      }
         };
 
         // Instantiates and draws our chart, passing in some options.
